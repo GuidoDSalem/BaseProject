@@ -5,6 +5,8 @@ plugins {
     kotlin("android")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "1.6.21-1.0.6"
+
 }
 
 android {
@@ -49,6 +51,17 @@ android {
     }
 }
 
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
+}
+
 dependencies {
     implementation(Compose.compiler)
     implementation(Compose.ui)
@@ -71,6 +84,12 @@ dependencies {
 //    implementation(project(Modules.trackerPresentation))
 //    implementation(project(Modules.trackerDomain))
 //    implementation(project(Modules.trackerData))
+
+    //Navigation
+    implementation(Navigation.navImpl)
+    ksp(Navigation.navksp)
+
+
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
